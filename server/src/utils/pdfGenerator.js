@@ -16,19 +16,10 @@ const urlResolver = { resolve: () => {}, resolved: async () => {} };
 const printer = new PdfPrinter(fonts, null, urlResolver);
 
 const getLogoBase64 = () => {
-  const imgPath = path.join(__dirname, '..', 'assets', 'logo.jpeg');
+  const imgPath = 'd:/TEST PROJECT/ayush billing app/client/src/assets/Ayush tech logo.jpeg';
   if (fs.existsSync(imgPath)) {
     const img = fs.readFileSync(imgPath);
     return 'data:image/jpeg;base64,' + img.toString('base64');
-  }
-  return null;
-};
-
-const getSignatureBase64 = () => {
-  const imgPath = path.join(__dirname, '..', 'assets', 'signature.png');
-  if (fs.existsSync(imgPath)) {
-    const img = fs.readFileSync(imgPath);
-    return 'data:image/png;base64,' + img.toString('base64');
   }
   return null;
 };
@@ -44,7 +35,6 @@ const cb = (isChecked) => ({
 
 const getReceiptDocDefinition = (data) => {
   const logo = getLogoBase64();
-  const signature = getSignatureBase64();
   const amtInWords = numberToWordsIndian(data.amount);
   
   return {
@@ -219,7 +209,7 @@ const getReceiptDocDefinition = (data) => {
                         table: {
                           widths: ['*'],
                           body: [
-                            [signature ? { image: signature, width: 80, alignment: 'center', margin: [0, 5, 0, 5], border: [true, true, true, true] } : { text: '', border: [true, true, true, true], margin: [0, 15, 0, 15] }], // Signature box
+                            [{ text: '', border: [true, true, true, true], margin: [0, 15, 0, 15] }], // Signature box
                             [{ text: 'Authorised Signature', fontSize: 8, alignment: 'center', border: [false, false, false, false] }]
                           ]
                         },
@@ -270,7 +260,6 @@ const getReceiptDocDefinition = (data) => {
 
 const getVoucherDocDefinition = (data) => {
   const logo = getLogoBase64();
-  const signature = getSignatureBase64();
   const amtInWords = numberToWordsIndian(data.amount);
 
   return {
@@ -408,9 +397,7 @@ const getVoucherDocDefinition = (data) => {
                     [
                       { text: 'Prepared by\n\n__________________', fontSize: 9, alignment: 'center', margin: [0, 10, 0, 10] },
                       { text: 'Passed by\n\n__________________', fontSize: 9, alignment: 'center', margin: [0, 10, 0, 10] },
-                      signature 
-                        ? { stack: [{ text: 'Approved by', fontSize: 9, alignment: 'center' }, { image: signature, width: 80, alignment: 'center', margin: [0, 5, 0, 0] }], margin: [0, 10, 0, 0] } 
-                        : { text: 'Approved by\n\n__________________', fontSize: 9, alignment: 'center', margin: [0, 10, 0, 10] }
+                      { text: 'Approved by\n\n__________________', fontSize: 9, alignment: 'center', margin: [0, 10, 0, 10] }
                     ]
                   ]
                 }
