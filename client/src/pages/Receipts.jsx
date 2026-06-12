@@ -21,7 +21,8 @@ export default function Receipts() {
   const fetchReceipts = async () => {
     try {
       const { data } = await api.get('/receipts');
-      setReceipts(data);
+      // API returns { receipts: [], page: 1... } with pagination
+      setReceipts(data.receipts || data);
     } catch (error) {
       toast.error('Failed to load receipts');
     } finally {
@@ -97,7 +98,7 @@ export default function Receipts() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {loading ? <tr><td colSpan="6" className="text-center py-4">Loading...</td></tr> : 
-              receipts.map((r) => (
+              (Array.isArray(receipts) ? receipts : []).map((r) => (
               <tr key={r._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">{r.receiptNo}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

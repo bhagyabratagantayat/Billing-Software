@@ -21,7 +21,8 @@ export default function Vouchers() {
   const fetchVouchers = async () => {
     try {
       const { data } = await api.get('/vouchers');
-      setVouchers(data);
+      // API returns { vouchers: [], page: 1... } with pagination
+      setVouchers(data.vouchers || data);
     } catch (error) {
       toast.error('Failed to load vouchers');
     } finally {
@@ -97,7 +98,7 @@ export default function Vouchers() {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {loading ? <tr><td colSpan="6" className="text-center py-4">Loading...</td></tr> : 
-              vouchers.map((v) => (
+              (Array.isArray(vouchers) ? vouchers : []).map((v) => (
               <tr key={v._id} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">{v.voucherNo}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
