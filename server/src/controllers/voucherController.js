@@ -7,7 +7,7 @@ const logAudit = require('../utils/auditLogger');
 
 const createVoucher = async (req, res) => {
   try {
-    const { payeeName, gender, mobile, amount, paymentMode, utrNo, bankName, purpose, expenseCategory, passedBy, approvedBy, remarks } = req.body;
+    const { payeeName, gender, mobile, email, amount, paymentMode, utrNo, bankName, purpose, expenseCategory, passedBy, approvedBy, remarks } = req.body;
 
     // Prevent duplicate entries
     const existingVoucher = await Voucher.findOne({ payeeName, amount, purpose, utrNo: utrNo || null });
