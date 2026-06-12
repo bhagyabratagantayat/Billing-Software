@@ -7,6 +7,7 @@ const voucherSchema = new mongoose.Schema({
   payeeName: { type: String, required: true },
   gender: { type: String, enum: ['Male', 'Female', 'Other', 'Company'] },
   mobile: { type: String },
+  email: { type: String },
   amount: { type: Number, required: true },
   paymentMode: { 
     type: String, 

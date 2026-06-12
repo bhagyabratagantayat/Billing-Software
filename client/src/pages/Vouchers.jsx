@@ -14,7 +14,7 @@ export default function Vouchers() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    payeeName: '', mobile: '', amount: '', purpose: '', paymentMode: 'Cash', utrNo: '', bankName: '', remarks: ''
+    payeeName: '', mobile: '', email: '', amount: '', purpose: '', paymentMode: 'Cash', utrNo: '', bankName: '', remarks: ''
   });
   const [viewVoucher, setViewVoucher] = useState(null);
 
@@ -40,7 +40,7 @@ export default function Vouchers() {
       await api.post('/vouchers', formData);
       toast.success('Voucher created successfully');
       setShowModal(false);
-      setFormData({ payeeName: '', mobile: '', amount: '', purpose: '', paymentMode: 'Cash', utrNo: '', bankName: '', remarks: '' });
+      setFormData({ payeeName: '', mobile: '', email: '', amount: '', purpose: '', paymentMode: 'Cash', utrNo: '', bankName: '', remarks: '' });
       fetchVouchers();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to create voucher');
@@ -144,10 +144,14 @@ export default function Vouchers() {
                   <input type="text" required value={formData.payeeName} onChange={(e) => setFormData({...formData, payeeName: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
                 <div>
+                  <label className="block text-sm font-medium text-gray-700">Email Address (Optional)</label>
+                  <input type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Send voucher via email" />
+                </div>
+                <div>
                   <label className="block text-sm font-medium text-gray-700">Amount (₹) *</label>
                   <input type="number" required value={formData.amount} onChange={(e) => setFormData({...formData, amount: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-1">
                   <label className="block text-sm font-medium text-gray-700">Towards / Purpose *</label>
                   <input type="text" required value={formData.purpose} onChange={(e) => setFormData({...formData, purpose: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
