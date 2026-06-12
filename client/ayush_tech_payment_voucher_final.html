@@ -1,0 +1,141 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.vwrap { font-family: Arial, sans-serif; max-width: 720px; margin: 0 auto; padding: 1rem 0; }
+.vcard { background: #fff; border: 2.5px solid #1a2e6e; color: #111; }
+.vhdr { display: flex; align-items: center; gap: 0; border-bottom: 2.5px solid #1a2e6e; padding: 10px 16px; position: relative; }
+.vph { position: absolute; top: 10px; right: 14px; font-size: 11px; font-weight: 700; color: #222; }
+.vlogo { width: 90px; height: 90px; flex-shrink: 0; }
+.vco { flex: 1; text-align: center; padding: 0 8px; }
+.vco h1 { font-size: 26px; font-weight: 900; color: #1a2e6e; letter-spacing: 1px; margin-bottom: 4px; }
+.vco p { font-size: 10.5px; color: #222; line-height: 1.6; }
+.vtrow { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-bottom: 1px solid #1a2e6e; }
+.vref { font-size: 12px; }
+.vref b { color: #1a2e6e; border-bottom: 1px solid #1a2e6e; padding: 0 48px 1px 4px; }
+.vtbadge { background: #1a2e6e; color: #fff; font-size: 16px; font-weight: 900; padding: 8px 36px; letter-spacing: 1.5px; }
+.vdt b { color: #1a2e6e; border-bottom: 1px solid #1a2e6e; padding: 0 48px 1px 4px; font-size: 12px; }
+.vfrow { padding: 12px 16px; border-bottom: 1px solid #ddd; font-size: 12px; display: flex; align-items: baseline; gap: 6px; }
+.vfl { white-space: nowrap; color: #111; }
+.vfv { font-weight: 700; color: #1a2e6e; border-bottom: 1px solid #555; flex: 1; padding-bottom: 1px; }
+.vfv.lt { font-weight: 400; color: #333; }
+.vwords { padding: 10px 16px 4px; border-bottom: none; font-size: 12px; display: flex; align-items: baseline; gap: 6px; }
+.vwords-line { padding: 0 16px 10px; border-bottom: 1px solid #ddd; }
+.vwords-line div { border-bottom: 1px solid #bbb; margin-left: 0; }
+.vpaybox { margin: 8px 16px; border: 1.5px solid #1a2e6e; padding: 8px 12px 10px; }
+.vptitle { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+.vptitle span { font-weight: 400; }
+.vpopts { display: flex; align-items: center; justify-content: space-around; font-size: 11.5px; }
+.vopt { display: flex; align-items: center; gap: 5px; }
+.vcb { width: 13px; height: 13px; border: 1.5px solid #333; display: inline-flex; align-items: center; justify-content: center; background: #fff; flex-shrink: 0; }
+.vcb.on { background: #1a2e6e; color: #fff; font-size: 9px; font-weight: 900; }
+.vutr { padding: 8px 16px; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; font-size: 11.5px; }
+.vutr b { color: #1a2e6e; border-bottom: 1px solid #555; padding-bottom: 1px; margin-left: 4px; }
+.vbot { display: flex; align-items: flex-end; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid #ddd; }
+.vrs { display: flex; border: 1.5px solid #1a2e6e; }
+.vrsl { background: #1a2e6e; color: #fff; font-weight: 900; font-size: 13px; padding: 6px 12px; }
+.vrsv { padding: 6px 56px 6px 10px; font-weight: 700; font-size: 13px; color: #1a2e6e; }
+.vsig { text-align: right; }
+.vsigbox { border: 1.5px solid #1a2e6e; width: 130px; height: 42px; margin-bottom: 4px; margin-left: auto; }
+.vsigl { font-size: 10px; color: #333; }
+.vfoot { display: grid; grid-template-columns: 1fr 1fr 1fr; font-size: 11px; border-top: 2px solid #1a2e6e; }
+.vfc { padding: 9px 12px 7px; border-right: 1px solid #1a2e6e; text-align: center; }
+.vfc:last-child { border-right: none; }
+.vfcl { color: #333; margin-bottom: 16px; }
+.vfcline { border-bottom: 1px solid #555; }
+</style>
+
+<div class="vwrap">
+  <div style="font-size:12px;color:#666;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+    <i class="ti ti-file-invoice" style="font-size:15px;" aria-hidden="true"></i>
+    Payment Voucher — print ready &nbsp;|&nbsp; AYUSH Technologies
+  </div>
+  <div class="vcard">
+
+    <div class="vhdr">
+      <div class="vph">Ph.: 8249441129</div>
+      <svg class="vlogo" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="44" cy="50" rx="28" ry="11" fill="none" stroke="#2a7de1" stroke-width="2.2" transform="rotate(-18 44 50)"/>
+        <polygon points="44,10 28,62 36,62 44,36 52,62 60,62" fill="#1a2e6e"/>
+        <polygon points="34,50 54,50 52,56 36,56" fill="#1a2e6e"/>
+        <rect x="33" y="30" width="22" height="5" fill="#2a7de1"/>
+        <rect x="64" y="12" width="5" height="5" fill="#2a7de1" opacity="0.9"/>
+        <rect x="70" y="8" width="4" height="4" fill="#2a7de1" opacity="0.7"/>
+        <rect x="69" y="15" width="3" height="3" fill="#1a2e6e" opacity="0.5"/>
+        <rect x="75" y="12" width="3" height="3" fill="#2a7de1" opacity="0.4"/>
+        <text x="44" y="78" text-anchor="middle" font-size="9" font-weight="900" fill="#1a2e6e" font-family="Arial" letter-spacing="2">AYUSH</text>
+        <text x="44" y="86" text-anchor="middle" font-size="5.5" fill="#2a7de1" font-family="Arial" letter-spacing="1.5">TECHNOLOGIES</text>
+      </svg>
+      <div class="vco">
+        <h1>AYUSH TECHNOLOGIES</h1>
+        <p>Corporate Office : BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
+        <p>Email : founder@ayushtechnologies.in</p>
+      </div>
+    </div>
+
+    <div class="vtrow">
+      <div class="vref">Ref. No. &nbsp;<b>PV-20260611-0001</b></div>
+      <div class="vtbadge">PAYMENT VOUCHER</div>
+      <div class="vdt">Date : &nbsp;<b>11/06/2026</b></div>
+    </div>
+
+    <div class="vfrow" style="padding-top:16px; padding-bottom:16px;">
+      <span class="vfl">Paid to Mr. / Mrs. / M/s.</span>
+      <span class="vfv">Suresh Babu Patel</span>
+    </div>
+
+    <div class="vwords">
+      <span class="vfl">Rupees (in words)</span>
+      <span class="vfv">Fifteen Thousand Rupees Only</span>
+    </div>
+    <div class="vwords-line"><div></div></div>
+
+    <div class="vfrow" style="padding-top:14px; padding-bottom:14px;">
+      <span class="vfl">Towards</span>
+      <span class="vfv lt">Server Hosting Renewal — AWS Account Q2 2026</span>
+    </div>
+
+    <div class="vpaybox">
+      <div class="vptitle">Payment Mode &nbsp;<span>(Please tick ✓)</span></div>
+      <div class="vpopts">
+        <div class="vopt"><div class="vcb"></div> &nbsp;Cash</div>
+        <div class="vopt"><div class="vcb"></div> &nbsp;Online</div>
+        <div class="vopt"><div class="vcb on">✓</div> &nbsp;UPI</div>
+        <div class="vopt"><div class="vcb"></div> &nbsp;Cheque</div>
+        <div class="vopt"><div class="vcb"></div> &nbsp;Bank Transfer</div>
+      </div>
+    </div>
+
+    <div class="vutr">
+      Transaction / Cheque / UTR No.<b>HDFC0987654321</b>
+    </div>
+
+    <div class="vbot">
+      <div class="vrs">
+        <div class="vrsl">Rs.</div>
+        <div class="vrsv">15,000.00</div>
+      </div>
+      <div class="vsig">
+        <div class="vsigbox"></div>
+        <div class="vsigl">Payee's Signature</div>
+      </div>
+    </div>
+
+    <div class="vfoot">
+      <div class="vfc"><div class="vfcl">Prepared by</div><div class="vfcline"></div></div>
+      <div class="vfc"><div class="vfcl">Passed by</div><div class="vfcline"></div></div>
+      <div class="vfc"><div class="vfcl">Approved by</div><div class="vfcline"></div></div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#0c447c;background:#e6f1fb;border:0.5px solid #b5d4f4;border-radius:6px;padding:5px 12px;">
+      <i class="ti ti-download" style="font-size:14px;" aria-hidden="true"></i>
+      PDF saved · PV-20260611-0001_SureshBabuPatel.pdf
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#711b0c;background:#faece7;border:0.5px solid #f5c4b3;border-radius:6px;padding:5px 12px;">
+      <i class="ti ti-printer" style="font-size:14px;" aria-hidden="true"></i>
+      Print physical copy
+    </div>
+  </div>
+</div>

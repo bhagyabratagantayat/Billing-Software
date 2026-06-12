@@ -1,0 +1,187 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { font-family: Arial, sans-serif; max-width: 720px; margin: 0 auto; padding: 1rem 0; }
+.card { background: #fff; border: 2.5px solid #1a2e6e; color: #111; }
+.hdr { display: flex; align-items: center; gap: 0; border-bottom: 2.5px solid #1a2e6e; padding: 10px 16px 10px; position: relative; }
+.logo-svg { width: 90px; height: 90px; flex-shrink: 0; }
+.hdr-center { flex: 1; text-align: center; padding: 0 8px; }
+.hdr-center h1 { font-size: 26px; font-weight: 900; color: #1a2e6e; letter-spacing: 1px; margin-bottom: 4px; }
+.hdr-center p { font-size: 10.5px; color: #222; line-height: 1.6; }
+.ph { position: absolute; top: 10px; right: 14px; font-size: 11px; font-weight: 700; color: #222; }
+.title-row { display: flex; align-items: center; justify-content: space-between; padding: 9px 16px; border-bottom: 1px solid #1a2e6e; }
+.doc-no { font-size: 12px; }
+.doc-no b { color: #1a2e6e; }
+.title-badge { background: #1a2e6e; color: #fff; font-size: 16px; font-weight: 900; padding: 8px 36px; letter-spacing: 1.5px; }
+.dt { font-size: 12px; }
+.dt b { color: #1a2e6e; border-bottom: 1px solid #1a2e6e; padding: 0 48px 1px 4px; }
+.frow { padding: 9px 16px; border-bottom: 1px solid #ddd; font-size: 12px; display: flex; align-items: baseline; gap: 6px; }
+.flabel { white-space: nowrap; color: #111; }
+.fval { font-weight: 700; color: #1a2e6e; border-bottom: 1px solid #555; flex: 1; padding-bottom: 1px; min-width: 0; }
+.fval.light { font-weight: 400; color: #333; }
+.fig-row { padding: 9px 16px; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 14px; font-size: 12px; }
+.rs-box { display: flex; border: 1.5px solid #1a2e6e; }
+.rs-lbl { background: #1a2e6e; color: #fff; font-weight: 900; font-size: 13px; padding: 5px 11px; }
+.rs-val { padding: 5px 56px 5px 10px; font-weight: 700; font-size: 13px; color: #1a2e6e; border-left: 1px solid #1a2e6e; }
+.pay-box { margin: 7px 16px; border: 1.5px solid #1a2e6e; padding: 7px 12px 9px; }
+.pay-title { font-size: 11px; font-weight: 700; text-align: center; margin-bottom: 7px; }
+.pay-title span { font-weight: 400; }
+.pay-opts { display: flex; align-items: center; justify-content: space-around; font-size: 11.5px; font-weight: 700; }
+.opt { display: flex; align-items: center; gap: 5px; }
+.cb { width: 13px; height: 13px; border: 1.5px solid #333; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: #fff; }
+.cb.on { background: #1a2e6e; color: #fff; font-size: 9px; font-weight: 900; }
+.div-line { width: 1px; height: 16px; background: #1a2e6e; }
+.utr-row { padding: 7px 16px; border-bottom: 1px solid #ddd; font-size: 11.5px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: baseline; }
+.utr-left b { color: #1a2e6e; border-bottom: 1px solid #555; padding-bottom: 1px; }
+.utr-right { font-size: 11.5px; display: flex; gap: 8px; }
+.utr-right b { color: #1a2e6e; border-bottom: 1px solid #555; padding-bottom: 1px; padding-right: 40px; }
+.bank-row { display: grid; grid-template-columns: 1fr 1fr; padding: 6px 16px; border-bottom: 1px solid #ddd; font-size: 11.5px; gap: 12px; }
+.bank-row b { color: #1a2e6e; border-bottom: 1px solid #555; padding-bottom: 1px; margin-left: 4px; }
+.rem-row { padding: 6px 16px; border-bottom: 1px solid #ddd; font-size: 11.5px; }
+.rem-row b { color: #333; font-weight: 400; border-bottom: 1px solid #aaa; padding-bottom: 1px; margin-left: 4px; }
+.bot-row { display: flex; align-items: flex-end; justify-content: space-between; padding: 9px 16px; border-bottom: 1px solid #ddd; }
+.sig-area { text-align: right; }
+.sig-box { border: 1.5px solid #1a2e6e; width: 130px; height: 42px; margin-bottom: 4px; margin-left: auto; }
+.sig-lbl { font-size: 10px; color: #333; }
+.thanks { text-align: center; padding: 7px 16px; font-style: italic; font-size: 12.5px; font-weight: 700; color: #1a2e6e; border-bottom: 2px solid #1a2e6e; }
+.footer { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; font-size: 11px; }
+.fc { padding: 8px 10px 6px; border-right: 1px solid #1a2e6e; }
+.fc:last-child { border-right: none; }
+.fc-lbl { color: #333; margin-bottom: 14px; }
+.fc-line { border-bottom: 1px solid #555; }
+</style>
+
+<div class="wrap">
+  <div style="font-size:12px;color:#666;margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+    <i class="ti ti-mail" style="font-size:15px;" aria-hidden="true"></i>
+    Money Receipt — auto-email + print ready &nbsp;|&nbsp; AYUSH Technologies
+  </div>
+  <div class="card">
+
+    <div class="hdr">
+      <div class="ph">Ph.: 8249441129</div>
+      <!-- SVG logo replicating AT mark + dots + orbit ring -->
+      <svg class="logo-svg" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+        <!-- orbit ellipse -->
+        <ellipse cx="44" cy="50" rx="28" ry="11" fill="none" stroke="#2a7de1" stroke-width="2.2" transform="rotate(-18 44 50)"/>
+        <!-- A shape -->
+        <polygon points="44,10 28,62 36,62 44,36 52,62 60,62" fill="#1a2e6e"/>
+        <polygon points="34,50 54,50 52,56 36,56" fill="#1a2e6e"/>
+        <!-- T crossbar inside -->
+        <rect x="33" y="30" width="22" height="5" fill="#2a7de1"/>
+        <!-- pixel dots top right -->
+        <rect x="64" y="12" width="5" height="5" fill="#2a7de1" opacity="0.9"/>
+        <rect x="70" y="8" width="4" height="4" fill="#2a7de1" opacity="0.7"/>
+        <rect x="69" y="15" width="3" height="3" fill="#1a2e6e" opacity="0.5"/>
+        <rect x="75" y="12" width="3" height="3" fill="#2a7de1" opacity="0.4"/>
+        <!-- AYUSH text -->
+        <text x="44" y="78" text-anchor="middle" font-size="9" font-weight="900" fill="#1a2e6e" font-family="Arial" letter-spacing="2">AYUSH</text>
+        <text x="44" y="86" text-anchor="middle" font-size="5.5" fill="#2a7de1" font-family="Arial" letter-spacing="1.5">TECHNOLOGIES</text>
+      </svg>
+
+      <div class="hdr-center">
+        <h1>AYUSH TECHNOLOGIES</h1>
+        <p>Corporate Office : BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
+        <p>Email : founder@ayushtechnologies.in</p>
+      </div>
+    </div>
+
+    <div class="title-row">
+      <div class="doc-no">Receipt No. : <b>RCP-20260611-0003</b></div>
+      <div class="title-badge">MONEY RECEIPT</div>
+      <div class="dt">Date : <b>11/06/2026</b></div>
+    </div>
+
+    <div class="frow">
+      <span class="flabel">Received with thanks from Mr. / Mrs. / M/s.</span>
+      <span class="fval">Rajesh Kumar Sharma</span>
+    </div>
+
+    <div class="frow">
+      <span class="flabel">the sum of Rupees (in words)</span>
+      <span class="fval">Two Thousand Five Hundred Rupees Only</span>
+    </div>
+    <div style="padding:2px 16px 8px;border-bottom:1px solid #ddd;">
+      <div style="border-bottom:1px solid #bbb;margin-left:180px;"></div>
+    </div>
+
+    <div class="fig-row">
+      <span>Rupees (in figures)</span>
+      <div class="rs-box">
+        <div class="rs-lbl">₹</div>
+        <div class="rs-val">2,500.00</div>
+      </div>
+    </div>
+
+    <div class="frow">
+      <span class="flabel">Towards</span>
+      <span class="fval light">Website Development — Phase 1 Advance Payment</span>
+    </div>
+
+    <div class="pay-box">
+      <div class="pay-title">Paid by &nbsp;<span>(Please tick in the appropriate box)</span></div>
+      <div class="pay-opts">
+        <div class="opt"><div class="cb"></div> CASH</div>
+        <div class="div-line"></div>
+        <div class="opt"><div class="cb"></div> ONLINE</div>
+        <div class="div-line"></div>
+        <div class="opt"><div class="cb on">✓</div> UPI</div>
+        <div class="div-line"></div>
+        <div class="opt"><div class="cb"></div> CHEQUE</div>
+        <div class="div-line"></div>
+        <div class="opt"><div class="cb"></div> BANK TRANSFER</div>
+      </div>
+    </div>
+
+    <div class="utr-row">
+      <div class="utr-left">Transaction / Cheque / UTR No. &nbsp;<b>UTR123456789012</b></div>
+      <div class="utr-right">Date &nbsp;<b>11/06/2026</b></div>
+    </div>
+
+    <div class="bank-row">
+      <div>Bank Name <b>HDFC Bank</b></div>
+      <div>Branch <b>Bhubaneswar Main</b></div>
+    </div>
+
+    <div class="rem-row">
+      Remarks (if any) <b>Advance payment — Q2 project</b>
+    </div>
+
+    <div class="bot-row">
+      <div class="rs-box">
+        <div class="rs-lbl">Rs.</div>
+        <div class="rs-val">2,500.00</div>
+      </div>
+      <div class="sig-area">
+        <div class="sig-box"></div>
+        <div class="sig-lbl">Authorised Signature</div>
+      </div>
+    </div>
+
+    <div class="thanks">— Thank you for your payment! —</div>
+
+    <div class="footer">
+      <div class="fc"><div class="fc-lbl">Received by</div><div class="fc-line"></div></div>
+      <div class="fc"><div class="fc-lbl">Prepared by</div><div class="fc-line"></div></div>
+      <div class="fc"><div class="fc-lbl">Checked by</div><div class="fc-line"></div></div>
+      <div class="fc"><div class="fc-lbl">Approved by</div><div class="fc-line"></div></div>
+    </div>
+
+  </div>
+
+  <!-- email + print note -->
+  <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#3b6d11;background:#eaf3de;border:0.5px solid #c0dd97;border-radius:6px;padding:5px 12px;">
+      <i class="ti ti-mail-forward" style="font-size:14px;" aria-hidden="true"></i>
+      Auto-sent to: rajesh@example.com
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#0c447c;background:#e6f1fb;border:0.5px solid #b5d4f4;border-radius:6px;padding:5px 12px;">
+      <i class="ti ti-download" style="font-size:14px;" aria-hidden="true"></i>
+      PDF saved · RCP-20260611-0003_RajeshKumarSharma.pdf
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#711b0c;background:#faece7;border:0.5px solid #f5c4b3;border-radius:6px;padding:5px 12px;">
+      <i class="ti ti-printer" style="font-size:14px;" aria-hidden="true"></i>
+      Print physical copy
+    </div>
+  </div>
+</div>
