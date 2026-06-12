@@ -84,7 +84,7 @@ export default function Vouchers() {
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -138,7 +138,7 @@ export default function Vouchers() {
               <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500"><X size={24} /></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Payee Name *</label>
                   <input type="text" required value={formData.payeeName} onChange={(e) => setFormData({...formData, payeeName: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
@@ -151,7 +151,7 @@ export default function Vouchers() {
                   <label className="block text-sm font-medium text-gray-700">Amount (₹) *</label>
                   <input type="number" required value={formData.amount} onChange={(e) => setFormData({...formData, amount: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
-                <div className="col-span-1">
+                <div className="col-span-1 md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700">Towards / Purpose *</label>
                   <input type="text" required value={formData.purpose} onChange={(e) => setFormData({...formData, purpose: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
                 </div>
@@ -188,27 +188,27 @@ export default function Vouchers() {
               <p className="text-sm text-gray-500">Voucher Details</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
               <div><span className="font-semibold text-gray-600">Voucher No:</span> {viewVoucher.voucherNo}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Created:</span> {new Date(viewVoucher.createdAt || viewVoucher.date).toLocaleString('en-IN')}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Created:</span> {new Date(viewVoucher.createdAt || viewVoucher.date).toLocaleString('en-IN')}</div>
               
               <div><span className="font-semibold text-gray-600">Payee Name:</span> {viewVoucher.payeeName}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Mobile:</span> {viewVoucher.mobile}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Mobile:</span> {viewVoucher.mobile}</div>
               
-              <div className="col-span-2 bg-red-50 p-4 rounded-md mt-2 mb-2 flex justify-between items-center border border-red-100">
+              <div className="col-span-1 md:col-span-2 bg-red-50 p-4 rounded-md mt-2 mb-2 flex justify-between items-center border border-red-100">
                 <span className="font-semibold text-gray-600 text-lg">Amount Paid:</span>
                 <span className="text-2xl font-bold text-red-600">₹ {viewVoucher.amount}</span>
               </div>
 
               <div><span className="font-semibold text-gray-600">Towards:</span> {viewVoucher.purpose}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Payment Mode:</span> {viewVoucher.paymentMode}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Payment Mode:</span> {viewVoucher.paymentMode}</div>
               
               {viewVoucher.paymentMode !== 'Cash' && (
-                <div className="col-span-2"><span className="font-semibold text-gray-600">Transaction No:</span> {viewVoucher.utrNo}</div>
+                <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Transaction No:</span> {viewVoucher.utrNo}</div>
               )}
               
-              <div className="col-span-2"><span className="font-semibold text-gray-600">Remarks:</span> {viewVoucher.remarks || 'None'}</div>
-              <div className="col-span-2"><span className="font-semibold text-gray-600">Prepared By:</span> {viewVoucher.preparedBy?.name || 'Staff'}</div>
+              <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Remarks:</span> {viewVoucher.remarks || 'None'}</div>
+              <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Prepared By:</span> {viewVoucher.preparedBy?.name || 'Staff'}</div>
             </div>
 
             <div className="mt-8 flex justify-end space-x-3 border-t pt-4">

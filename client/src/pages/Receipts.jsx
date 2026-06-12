@@ -84,7 +84,7 @@ export default function Receipts() {
         </button>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -138,7 +138,7 @@ export default function Receipts() {
               <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-500"><X size={24} /></button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700">Client Name *</label>
                   <input type="text" required value={formData.clientName} onChange={(e) => setFormData({...formData, clientName: e.target.value})} className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" />
@@ -192,27 +192,27 @@ export default function Receipts() {
               <p className="text-sm text-gray-500">Receipt Details</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
               <div><span className="font-semibold text-gray-600">Receipt No:</span> {viewReceipt.receiptNo}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Created:</span> {new Date(viewReceipt.createdAt || viewReceipt.date).toLocaleString('en-IN')}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Created:</span> {new Date(viewReceipt.createdAt || viewReceipt.date).toLocaleString('en-IN')}</div>
               
               <div><span className="font-semibold text-gray-600">Client Name:</span> {viewReceipt.clientName}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Mobile:</span> {viewReceipt.mobile}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Mobile:</span> {viewReceipt.mobile}</div>
               
-              <div className="col-span-2 bg-green-50 p-4 rounded-md mt-2 mb-2 flex justify-between items-center border border-green-100">
+              <div className="col-span-1 md:col-span-2 bg-green-50 p-4 rounded-md mt-2 mb-2 flex justify-between items-center border border-green-100">
                 <span className="font-semibold text-gray-600 text-lg">Amount Received:</span>
                 <span className="text-2xl font-bold text-green-600">₹ {viewReceipt.amount}</span>
               </div>
 
               <div><span className="font-semibold text-gray-600">Towards:</span> {viewReceipt.purpose}</div>
-              <div className="text-right"><span className="font-semibold text-gray-600">Payment Mode:</span> {viewReceipt.paymentMode}</div>
+              <div className="md:text-right"><span className="font-semibold text-gray-600">Payment Mode:</span> {viewReceipt.paymentMode}</div>
               
               {viewReceipt.paymentMode !== 'Cash' && (
-                <div className="col-span-2"><span className="font-semibold text-gray-600">Transaction No:</span> {viewReceipt.utrNo}</div>
+                <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Transaction No:</span> {viewReceipt.utrNo}</div>
               )}
               
-              <div className="col-span-2"><span className="font-semibold text-gray-600">Remarks:</span> {viewReceipt.remarks || 'None'}</div>
-              <div className="col-span-2"><span className="font-semibold text-gray-600">Received By:</span> {viewReceipt.receivedBy?.name || 'Staff'}</div>
+              <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Remarks:</span> {viewReceipt.remarks || 'None'}</div>
+              <div className="col-span-1 md:col-span-2"><span className="font-semibold text-gray-600">Received By:</span> {viewReceipt.receivedBy?.name || 'Staff'}</div>
             </div>
 
             <div className="mt-8 flex justify-end space-x-3 border-t pt-4">

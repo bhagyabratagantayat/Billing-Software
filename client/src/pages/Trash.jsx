@@ -63,7 +63,7 @@ export default function Trash() {
         )}
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-x-auto">
         {loading ? (
           <div className="text-center py-8 text-gray-500">Loading...</div>
         ) : trashItems.length === 0 ? (
