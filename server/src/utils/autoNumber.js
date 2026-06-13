@@ -8,7 +8,7 @@ const generateNextSequence = async (sequenceName, prefix) => {
   const counter = await Counter.findOneAndUpdate(
     { id: idStr },
     { $inc: { seq: 1 } },
-    { new: true, upsert: true }
+    { returnDocument: 'after', upsert: true }
   );
 
   const seqStr = String(counter.seq).padStart(4, '0');

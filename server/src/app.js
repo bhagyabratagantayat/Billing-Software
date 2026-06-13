@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const xss = require('sanitize-html'); // We'll use this manually where needed or write custom middleware
 const cookieParser = require('cookie-parser');
+const sendEmail = require('./utils/emailSender');
 
 const app = express();
 
@@ -40,6 +41,23 @@ app.use('/api/audit-logs', require('./routes/auditLogRoutes'));
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+
+// Test Email Route (development only)
+if (process.env.NODE_ENV !== 'production') {
+  app.get('/api/test/email', async (req, res) => {
+    try {
+      await sendEmail({
+        email: process.env.CEO_EMAIL,
+        subject: 'AYUSH Billing App — Email Test',
+        message: 'Email is working correctly!',
+        html: '<h2>✅ Email is working correctly!</h2>'
+      });
+      res.json({ success: true, message: 'Test email sent!' });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+}
 
 // Error handling middleware (to be enhanced)
 app.use((err, req, res, next) => {
