@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
@@ -12,6 +12,30 @@ export default function Login() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [serverStatus, setServerStatus] = useState('checking'); // 'checking', 'online', 'waking', 'offline'
+
+  useEffect(() => {
+    let isMounted = true;
+    const baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5000/api').replace('/api', '');
+    
+    const checkServer = async () => {
+      try {
+        // If it takes more than 3 seconds, assume Render is waking up from sleep
+        const timeoutId = setTimeout(() => {
+          if (isMounted) setServerStatus('waking');
+        }, 3000);
+
+        await fetch(baseUrl);
+        clearTimeout(timeoutId);
+        if (isMounted) setServerStatus('online');
+      } catch (error) {
+        if (isMounted) setServerStatus('offline');
+      }
+    };
+    
+    checkServer();
+    return () => { isMounted = false; };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +59,37 @@ export default function Login() {
           <h2 className="text-center text-3xl font-extrabold text-primary">
             AYUSH Technologies
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          
+          <div className="flex items-center justify-center mt-3 space-x-2 bg-gray-50 px-3 py-1 rounded-full border border-gray-100">
+            <span className="relative flex h-3 w-3">
+              {serverStatus === 'online' && (
+                <>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </>
+              )}
+              {serverStatus === 'waking' && (
+                <>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                </>
+              )}
+              {serverStatus === 'checking' && (
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-gray-400"></span>
+              )}
+              {serverStatus === 'offline' && (
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+              )}
+            </span>
+            <span className="text-xs font-medium text-gray-600">
+              {serverStatus === 'checking' && 'Checking Server...'}
+              {serverStatus === 'online' && 'Server Active'}
+              {serverStatus === 'waking' && 'Server Waking Up (takes ~50s)...'}
+              {serverStatus === 'offline' && 'Server Offline'}
+            </span>
+          </div>
+
+          <p className="mt-4 text-center text-sm text-gray-600">
             Sign in to your account
           </p>
         </div>
