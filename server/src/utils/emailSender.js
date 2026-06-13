@@ -22,20 +22,23 @@ const createConfig = (configName, options) => ({
 
 // List of SMTP configurations to test automatically
 const smtpConfigs = [
-  createConfig('Port 465 (Secure)', {
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+  createConfig('Brevo Port 2525 (Render Safe)', {
+    host: 'smtp-relay.brevo.com',
+    port: 2525,
+    secure: false,
     tls: { rejectUnauthorized: false }
   }),
-  createConfig('Port 587 (STARTTLS)', {
-    host: 'smtp.gmail.com',
+  createConfig('Brevo Port 587 (STARTTLS)', {
+    host: 'smtp-relay.brevo.com',
     port: 587,
     secure: false,
     tls: { rejectUnauthorized: false }
   }),
-  createConfig('Service: Gmail', {
-    service: 'gmail'
+  createConfig('Brevo Port 465 (Secure)', {
+    host: 'smtp-relay.brevo.com',
+    port: 465,
+    secure: true,
+    tls: { rejectUnauthorized: false }
   })
 ];
 
