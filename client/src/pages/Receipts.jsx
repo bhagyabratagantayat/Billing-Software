@@ -100,7 +100,7 @@ export default function Receipts() {
             {loading ? <tr><td colSpan="6" className="text-center py-4">Loading...</td></tr> : 
               (Array.isArray(receipts) ? receipts : []).map((r) => (
               <tr key={r._id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-primary">{r.receiptNo}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-600">{r.receiptNo}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {new Date(r.createdAt || r.date).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'short', timeStyle: 'short' })}
                 </td>
@@ -193,7 +193,7 @@ export default function Receipts() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
-              <div><span className="font-semibold text-gray-600">Receipt No:</span> {viewReceipt.receiptNo}</div>
+              <div><span className="font-semibold text-gray-600">Receipt No:</span> <span className="text-red-600 font-bold">{viewReceipt.receiptNo}</span></div>
               <div className="md:text-right"><span className="font-semibold text-gray-600">Created:</span> {new Date(viewReceipt.createdAt || viewReceipt.date).toLocaleString('en-IN')}</div>
               
               <div><span className="font-semibold text-gray-600">Client Name:</span> {viewReceipt.clientName}</div>

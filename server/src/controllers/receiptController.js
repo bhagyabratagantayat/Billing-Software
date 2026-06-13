@@ -76,7 +76,7 @@ const createReceipt = async (req, res) => {
                   <p>Dear <strong>${clientName}</strong>,</p>
                   <p>Please find attached your payment receipt for the amount of <strong>₹ ${amount}</strong>.</p>
                   <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
-                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Receipt No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${receiptNo}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Receipt No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;"><span style="color: red; font-weight: bold;">${receiptNo}</span></td></tr>
                     <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleDateString()}</td></tr>
                     <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">₹ ${amount}</td></tr>
                     <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Purpose:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${purpose}</td></tr>

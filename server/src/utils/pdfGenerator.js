@@ -75,7 +75,7 @@ const getReceiptDocDefinition = (data) => {
                   widths: ['auto', '*', 'auto'],
                   body: [
                     [
-                      { text: [{ text: 'Receipt No. : ' }, { text: data.receiptNo, bold: true, color: '#1a2e6e' }], fontSize: 10, margin: [0, 5, 0, 0] },
+                      { text: [{ text: 'Receipt No. : ' }, { text: data.receiptNo, bold: true, color: 'red' }], fontSize: 10, margin: [0, 5, 0, 0] },
                       { text: 'MONEY RECEIPT', fontSize: 14, bold: true, color: 'white', fillColor: '#1a2e6e', alignment: 'center', margin: [0, 5, 0, 5] },
                       { text: [{ text: 'Date : ' }, { text: new Date(data.date).toLocaleDateString(), bold: true, color: '#1a2e6e', decoration: 'underline' }], fontSize: 10, margin: [0, 5, 0, 0] }
                     ]

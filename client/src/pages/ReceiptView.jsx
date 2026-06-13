@@ -122,7 +122,7 @@ const ReceiptView = () => {
           </div>
 
           <div className="flex items-center justify-between p-[9px_16px] border-b border-[#1a2e6e]">
-            <div className="text-xs">Receipt No. : <b className="text-[#1a2e6e]">{receipt.receiptNo}</b></div>
+            <div className="text-xs">Receipt No. : <b className="text-red-600">{receipt.receiptNo}</b></div>
             <div className="bg-[#1a2e6e] text-white text-base font-black px-9 py-2 tracking-[1.5px]">MONEY RECEIPT</div>
             <div className="text-xs">Date : <b className="text-[#1a2e6e] border-b border-[#1a2e6e] pl-1 pr-12 pb-[1px]">{new Date(receipt.date).toLocaleDateString('en-IN')}</b></div>
           </div>
