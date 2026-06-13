@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/api';
 import { Printer, Download, Mail, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -29,7 +29,7 @@ const VoucherView = () => {
     const fetchVoucher = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`http://localhost:5000/api/vouchers/${id}`, {
+        const res = await axios.get(`/vouchers/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setVoucher(res.data);
@@ -45,7 +45,7 @@ const VoucherView = () => {
   const handleDownload = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/vouchers/${id}/pdf`, {
+      const res = await axios.get(`/vouchers/${id}/pdf`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       });
@@ -199,3 +199,4 @@ const VoucherView = () => {
 };
 
 export default VoucherView;
+

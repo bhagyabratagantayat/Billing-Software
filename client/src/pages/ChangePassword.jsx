@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
@@ -27,7 +27,7 @@ export default function ChangePassword() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/auth/change-password', 
+      const res = await axios.post('/auth/change-password', 
         { currentPassword, newPassword },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -100,3 +100,4 @@ export default function ChangePassword() {
     </div>
   );
 }
+

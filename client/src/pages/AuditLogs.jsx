@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../utils/api';
 import { Search } from 'lucide-react';
 
 export default function AuditLogs() {
@@ -10,7 +10,7 @@ export default function AuditLogs() {
   const fetchLogs = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/audit-logs?limit=50', {
+      const res = await axios.get('/audit-logs?limit=50', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setLogs(res.data.logs);
@@ -88,3 +88,4 @@ export default function AuditLogs() {
     </div>
   );
 }
+

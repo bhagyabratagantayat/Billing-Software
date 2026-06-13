@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import axios from '../utils/api';
 import { AuthContext } from '../context/AuthContext';
 import { Plus, Power, KeyRound, Copy } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -15,7 +15,7 @@ export default function Users() {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5000/api/users', {
+      const res = await axios.get('/users', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUsers(res.data.users);
@@ -34,7 +34,7 @@ export default function Users() {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/users', newUser, {
+      const res = await axios.post('/users', newUser, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('User created successfully');
@@ -49,7 +49,7 @@ export default function Users() {
   const toggleStatus = async (id, currentStatus) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/users/${id}/status`, { isActive: !currentStatus }, {
+      await axios.put(`/users/${id}/status`, { isActive: !currentStatus }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success(`User ${!currentStatus ? 'activated' : 'deactivated'}`);
@@ -63,7 +63,7 @@ export default function Users() {
     if (!window.confirm('Are you sure you want to reset this user\'s password?')) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.post(`http://localhost:5000/api/users/${id}/reset-password`, {}, {
+      const res = await axios.post(`/users/${id}/reset-password`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setCreatedCredentials({ email: 'Password Reset', password: res.data.tempPassword });
@@ -204,3 +204,4 @@ export default function Users() {
     </div>
   );
 }
+

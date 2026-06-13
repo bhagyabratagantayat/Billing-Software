@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/api';
 import { Printer, Download, Mail, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -29,7 +29,7 @@ const ReceiptView = () => {
     const fetchReceipt = async () => {
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get(`http://localhost:5000/api/receipts/${id}`, {
+        const res = await axios.get(`/receipts/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setReceipt(res.data);
@@ -45,7 +45,7 @@ const ReceiptView = () => {
   const handleDownload = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5000/api/receipts/${id}/pdf`, {
+      const res = await axios.get(`/receipts/${id}/pdf`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       });
@@ -223,3 +223,4 @@ const ReceiptView = () => {
 };
 
 export default ReceiptView;
+
