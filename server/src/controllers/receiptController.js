@@ -40,62 +40,69 @@ const createReceipt = async (req, res) => {
 
     const createdReceipt = await receipt.save();
     
-    // Generate PDF
-    const populatedReceipt = await Receipt.findById(createdReceipt._id).populate('receivedBy', 'name');
-    const docDefinition = getReceiptDocDefinition({
-      ...populatedReceipt.toObject(),
-      receivedByName: populatedReceipt.receivedBy.name
-    });
-    
-    const pdfBuffer = await generatePDFBuffer(docDefinition);
-    
-    // Upload to Cloudinary
-    const pdfUrl = await uploadPDFBuffer(pdfBuffer, `receipts/${receiptNo}.pdf`);
-    
-    // Update DB with PDF URL
-    createdReceipt.pdfUrl = pdfUrl;
-    await createdReceipt.save();
-
-    // Send Email if provided
-    if (email) {
-      try {
-        await sendEmail({
-          email: email,
-          subject: `Payment Receipt - ${receiptNo} | AYUSH Technology`,
-          message: `Dear ${clientName},\n\nPlease find attached your payment receipt for the amount of Rs. ${amount}.\n\nThank you,\nAYUSH Technologies`,
-          html: `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-              <h2 style="color: #1a3c6e;">AYUSH Technologies</h2>
-              <p>Dear <strong>${clientName}</strong>,</p>
-              <p>Please find attached your payment receipt for the amount of <strong>₹ ${amount}</strong>.</p>
-              <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Receipt No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${receiptNo}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleDateString()}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">₹ ${amount}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Purpose:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${purpose}</td></tr>
-              </table>
-              <p style="margin-top: 30px;">Best Regards,<br/><strong>AYUSH Technologies</strong><br/>Ph: 8249441129<br/>Corporate Office: BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
-            </div>
-          `,
-          attachments: [
-            {
-              filename: `Receipt_${receiptNo}.pdf`,
-              content: pdfBuffer,
-              contentType: 'application/pdf'
-            }
-          ]
-        });
-        createdReceipt.emailSent = true;
-        createdReceipt.emailSentAt = new Date();
-        await createdReceipt.save();
-      } catch (err) {
-        console.error('Failed to send email:', err);
-      }
-    }
-
     await logAudit(req, `Created Receipt ${receiptNo}`, 'receipt', createdReceipt._id.toString(), { amount });
 
+    // Send response immediately to prevent UI blocking
     res.status(201).json(createdReceipt);
+
+    // Background Processing: Generate PDF, Upload to Cloudinary, and Send Email
+    (async () => {
+      try {
+        const populatedReceipt = await Receipt.findById(createdReceipt._id).populate('receivedBy', 'name');
+        const docDefinition = getReceiptDocDefinition({
+          ...populatedReceipt.toObject(),
+          receivedByName: populatedReceipt.receivedBy.name
+        });
+        
+        const pdfBuffer = await generatePDFBuffer(docDefinition);
+        
+        // Upload to Cloudinary
+        const pdfUrl = await uploadPDFBuffer(pdfBuffer, `receipts/${receiptNo}.pdf`);
+        
+        // Update DB with PDF URL
+        createdReceipt.pdfUrl = pdfUrl;
+        await createdReceipt.save();
+
+        // Send Email if provided
+        if (email) {
+          try {
+            await sendEmail({
+              email: email,
+              subject: `Payment Receipt - ${receiptNo} | AYUSH Technology`,
+              message: `Dear ${clientName},\n\nPlease find attached your payment receipt for the amount of Rs. ${amount}.\n\nThank you,\nAYUSH Technologies`,
+              html: `
+                <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                  <h2 style="color: #1a3c6e;">AYUSH Technologies</h2>
+                  <p>Dear <strong>${clientName}</strong>,</p>
+                  <p>Please find attached your payment receipt for the amount of <strong>₹ ${amount}</strong>.</p>
+                  <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Receipt No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${receiptNo}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleDateString()}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">₹ ${amount}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Purpose:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${purpose}</td></tr>
+                  </table>
+                  <p style="margin-top: 30px;">Best Regards,<br/><strong>AYUSH Technologies</strong><br/>Ph: 8249441129<br/>Corporate Office: BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
+                </div>
+              `,
+              attachments: [
+                {
+                  filename: `Receipt_${receiptNo}.pdf`,
+                  content: pdfBuffer,
+                  contentType: 'application/pdf'
+                }
+              ]
+            });
+            createdReceipt.emailSent = true;
+            createdReceipt.emailSentAt = new Date();
+            await createdReceipt.save();
+          } catch (err) {
+            console.error('Failed to send email:', err);
+          }
+        }
+      } catch (bgError) {
+        console.error('Background processing failed for receipt:', bgError);
+      }
+    })();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

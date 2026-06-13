@@ -40,62 +40,69 @@ const createVoucher = async (req, res) => {
 
     const createdVoucher = await voucher.save();
     
-    // Generate PDF
-    const populatedVoucher = await Voucher.findById(createdVoucher._id).populate('preparedBy', 'name');
-    const docDefinition = getVoucherDocDefinition({
-      ...populatedVoucher.toObject(),
-      preparedByName: populatedVoucher.preparedBy.name
-    });
-    
-    const pdfBuffer = await generatePDFBuffer(docDefinition);
-    
-    // Upload to Cloudinary
-    const pdfUrl = await uploadPDFBuffer(pdfBuffer, `vouchers/${voucherNo}.pdf`);
-    
-    // Update DB with PDF URL
-    createdVoucher.pdfUrl = pdfUrl;
-    await createdVoucher.save();
-
-    // Send Email if provided
-    if (email) {
-      try {
-        await sendEmail({
-          email: email,
-          subject: `Payment Voucher - ${refNo} | AYUSH Technology`,
-          message: `Dear ${payeeName},\n\nPlease find attached the payment voucher for the amount of Rs. ${amount}.\n\nThank you,\nAYUSH Technologies`,
-          html: `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-              <h2 style="color: #1a3c6e;">AYUSH Technologies</h2>
-              <p>Dear <strong>${payeeName}</strong>,</p>
-              <p>Please find attached the official payment voucher for the amount of <strong>₹ ${amount}</strong>.</p>
-              <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Voucher No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${refNo}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleDateString()}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">₹ ${amount}</td></tr>
-                <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Purpose:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${purpose}</td></tr>
-              </table>
-              <p style="margin-top: 30px;">Best Regards,<br/><strong>AYUSH Technologies</strong><br/>Ph: 8249441129<br/>Corporate Office: BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
-            </div>
-          `,
-          attachments: [
-            {
-              filename: `Voucher_${refNo}.pdf`,
-              content: pdfBuffer,
-              contentType: 'application/pdf'
-            }
-          ]
-        });
-        createdVoucher.emailSent = true;
-        createdVoucher.emailSentAt = new Date();
-        await createdVoucher.save();
-      } catch (err) {
-        console.error('Failed to send email:', err);
-      }
-    }
-
     await logAudit(req, `Created Voucher ${refNo}`, 'voucher', createdVoucher._id.toString(), { amount });
 
+    // Send response immediately to prevent UI blocking
     res.status(201).json(createdVoucher);
+
+    // Background Processing: Generate PDF, Upload to Cloudinary, and Send Email
+    (async () => {
+      try {
+        const populatedVoucher = await Voucher.findById(createdVoucher._id).populate('preparedBy', 'name');
+        const docDefinition = getVoucherDocDefinition({
+          ...populatedVoucher.toObject(),
+          preparedByName: populatedVoucher.preparedBy.name
+        });
+        
+        const pdfBuffer = await generatePDFBuffer(docDefinition);
+        
+        // Upload to Cloudinary
+        const pdfUrl = await uploadPDFBuffer(pdfBuffer, `vouchers/${voucherNo}.pdf`);
+        
+        // Update DB with PDF URL
+        createdVoucher.pdfUrl = pdfUrl;
+        await createdVoucher.save();
+
+        // Send Email if provided
+        if (email) {
+          try {
+            await sendEmail({
+              email: email,
+              subject: `Payment Voucher - ${refNo} | AYUSH Technology`,
+              message: `Dear ${payeeName},\n\nPlease find attached the payment voucher for the amount of Rs. ${amount}.\n\nThank you,\nAYUSH Technologies`,
+              html: `
+                <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+                  <h2 style="color: #1a3c6e;">AYUSH Technologies</h2>
+                  <p>Dear <strong>${payeeName}</strong>,</p>
+                  <p>Please find attached the official payment voucher for the amount of <strong>₹ ${amount}</strong>.</p>
+                  <table style="width: 100%; margin-top: 15px; border-collapse: collapse;">
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Voucher No:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${refNo}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Date:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${new Date().toLocaleDateString()}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Amount:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">₹ ${amount}</td></tr>
+                    <tr><td style="padding: 8px; border: 1px solid #ddd;"><strong>Purpose:</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${purpose}</td></tr>
+                  </table>
+                  <p style="margin-top: 30px;">Best Regards,<br/><strong>AYUSH Technologies</strong><br/>Ph: 8249441129<br/>Corporate Office: BDA Market complex, Block-A, Baramunda, Bhubaneswar, Odisha 751003</p>
+                </div>
+              `,
+              attachments: [
+                {
+                  filename: `Voucher_${refNo}.pdf`,
+                  content: pdfBuffer,
+                  contentType: 'application/pdf'
+                }
+              ]
+            });
+            createdVoucher.emailSent = true;
+            createdVoucher.emailSentAt = new Date();
+            await createdVoucher.save();
+          } catch (err) {
+            console.error('Failed to send email:', err);
+          }
+        }
+      } catch (bgError) {
+        console.error('Background processing failed for voucher:', bgError);
+      }
+    })();
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
